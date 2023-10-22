@@ -8,8 +8,8 @@ import { FontAwesome } from '@expo/vector-icons';
 import { gql, useMutation } from '@apollo/client';
 
 const insertNewPostMutations = gql`
-	mutation MyMutation ($content: String!, $image: String, $userId: ID) {
-		insertPost(content: $content, image: $image, userId: $userId) {
+	mutation MyMutation ($userId: ID, $content: String!, $image: String,) {
+		insertPost(userId: $userId, content: $content, image: $image) {
 			content
 			image
 			id

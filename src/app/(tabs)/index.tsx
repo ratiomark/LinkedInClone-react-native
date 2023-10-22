@@ -1,4 +1,4 @@
-import { ActivityIndicator, FlatList, StyleSheet } from 'react-native';
+import { ActivityIndicator, FlatList, StyleSheet, Text } from 'react-native';
 import PostListItem from '@/components/PostListItem';
 import { Post } from '@/types';
 import { gql, useQuery } from '@apollo/client';
@@ -20,12 +20,16 @@ query getPostList {
 }
 `
 export default function HomeFeedScreen() {
-	const { data, loading } = useQuery<{ postList: Post[] }>(getPostListQuery)
+	const { data, loading, error } = useQuery<{ postList: Post[] }>(getPostListQuery)
 
 	if (loading) {
 		return <ActivityIndicator />
 	}
 
+	if (error) {
+		console.log(error)
+		return <Text>Something wrong</Text>
+	}
 
 	return (
 		// если внутри item есть id, то flalist будет автоматов использовать его в качестве значения у keyExtractor
