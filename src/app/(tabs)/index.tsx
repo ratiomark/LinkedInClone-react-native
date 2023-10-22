@@ -12,7 +12,7 @@ export default function HomeFeedScreen() {
 		<FlatList
 			data={posts as Post[]}
 			renderItem={({ item }) => <PostListItem post={item} />}
-			// keyExtractor={(item) => item.id}
+			keyExtractor={(item) => item.id}
 			showsVerticalScrollIndicator={false}
 			contentContainerStyle={{ gap: 10 }}
 		/>

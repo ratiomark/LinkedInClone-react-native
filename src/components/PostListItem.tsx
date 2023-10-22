@@ -1,6 +1,7 @@
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { View, Text, StyleSheet, Image, Pressable } from 'react-native';
 import { Post } from '@/types';
 import { FontAwesome } from '@expo/vector-icons';
+import { Link } from 'expo-router';
 
 type PostListItemProps = {
 	post: Post;
@@ -20,26 +21,28 @@ const FooterButton = ({ text, icon }: FooterButtonProp) => (
 
 const PostListItem = ({ post }: PostListItemProps) => {
 	return (
-		<View style={styles.container}>
-			<View style={styles.header}>
-				<Image source={{ uri: post.profile.image }} style={styles.userImage} />
-				<View>
-					<Text style={styles.userName}>{post.profile.name}</Text>
-					<Text style={styles.position}>{post.profile.position}</Text>
+		<Link href={`/posts/${post.id}`} asChild>
+			<Pressable style={styles.container}>
+				<View style={styles.header}>
+					<Image source={{ uri: post.profile.image }} style={styles.userImage} />
+					<View>
+						<Text style={styles.userName}>{post.profile.name}</Text>
+						<Text style={styles.position}>{post.profile.position}</Text>
+					</View>
 				</View>
-			</View>
 
-			<Text style={styles.content}>{post.content}</Text>
-			{post.image && (
-				<Image source={{ uri: post.image }} style={styles.postImage} />
-			)}
+				<Text style={styles.content}>{post.content}</Text>
+				{post.image && (
+					<Image source={{ uri: post.image }} style={styles.postImage} />
+				)}
 
-			<View style={styles.footer}>
-				<FooterButton text="Like" icon="thumbs-o-up" />
-				<FooterButton text="Comment" icon="comment-o" />
-				<FooterButton text="Share" icon="share" />
-			</View>
-		</View>
+				<View style={styles.footer}>
+					<FooterButton text="Like" icon="thumbs-o-up" />
+					<FooterButton text="Comment" icon="comment-o" />
+					<FooterButton text="Share" icon="share" />
+				</View>
+			</Pressable>
+		</Link>
 	);
 };
 
