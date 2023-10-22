@@ -1,18 +1,31 @@
-import { Pressable, StyleSheet, TextInput } from 'react-native';
+import { Pressable, StyleSheet, TextInput, Image } from 'react-native';
 
 import { Text, View } from '../../components/Themed';
 import { useLayoutEffect, useState } from 'react';
 import { useNavigation, useRouter } from 'expo-router';
 import * as ImagePicker from 'expo-image-picker';
 import { FontAwesome } from '@expo/vector-icons';
+import { gql, useMutation } from '@apollo/client';
 
-
+const insertNewPostMutations = gql`
+	mutation MyMutation ($content: String!, $image: String, $userId: ID) {
+		insertPost(content: $content, image: $image, userId: $userId) {
+			content
+			image
+			id
+			userId
+		}
+}
+`
 
 export default function NewPost() {
 	const [image, setImage] = useState<null | string>(null);
+	const [content, setContent] = useState("")
+	const [handleMutation, { loading }] = useMutation(insertNewPostMutations, {
+		refetchQueries: ['PostPaginatedListQuery'],
+	});
 	const navigation = useNavigation()
 	const router = useRouter()
-	const [content, setContent] = useState("")
 	const pickImage = async () => {
 		// No permissions request is necessary for launching the image library
 		let result = await ImagePicker.launchImageLibraryAsync({
@@ -28,7 +41,15 @@ export default function NewPost() {
 			setImage(result.assets[0].uri);
 		}
 	};
-	const onPost = () => {
+
+	const onPost = async () => {
+		if (loading) return
+		await handleMutation({
+			variables: {
+				content,
+				image
+			}
+		})
 		console.warn('post  ', content)
 		router.push('/(tabs)/')
 		setContent('')
@@ -48,33 +69,27 @@ export default function NewPost() {
 	return (
 		<View style={styles.container}>
 			<TextInput
-				onChangeText={setContent}
 				value={content}
-				placeholder='write something'
+				onChangeText={setContent}
+				placeholder="What do you want to talk about?"
 				style={styles.input}
 				multiline
 			/>
 
-			<View style={styles.footer} >
+			{image && <Image source={{ uri: image }} style={styles.image} />}
+
+			<View style={styles.footer}>
+				<Pressable onPress={pickImage} style={styles.iconButton}>
+					<FontAwesome name="image" size={24} color="black" />
+				</Pressable>
 
 				<View style={styles.iconButton}>
-					<Pressable onPress={pickImage}>
-						<FontAwesome name='image' size={24} color={'black'} />
-					</Pressable>
+					<FontAwesome name="camera" size={24} color="black" />
 				</View>
 
 				<View style={styles.iconButton}>
-					<Pressable onPress={pickImage}>
-						<FontAwesome name='camera' size={24} color={'black'} />
-					</Pressable>
+					<FontAwesome name="glass" size={24} color="black" />
 				</View>
-
-				<View style={styles.iconButton}>
-					<Pressable onPress={pickImage}>
-						<FontAwesome name='glass' size={24} color={'black'} />
-					</Pressable>
-				</View>
-
 			</View>
 
 		</View>
@@ -116,7 +131,12 @@ const styles = StyleSheet.create({
 		backgroundColor: 'gainsboro',
 		padding: 15,
 		borderRadius: 999,
-	}
+	},
+	image: {
+		width: '100%',
+		aspectRatio: 1,
+		marginTop: 'auto',
+	},
 	// title: {
 	// 	fontSize: 20,
 	// 	fontWeight: 'bold',

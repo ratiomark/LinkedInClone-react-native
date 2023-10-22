@@ -47,8 +47,8 @@ function RootLayoutNav() {
 	const colorScheme = useColorScheme();
 
 	return (
-		<ThemeProvider value={DefaultTheme}>
-			<ApolloClientProvider>
+		<ApolloClientProvider>
+			<ThemeProvider value={DefaultTheme}>
 
 				{/* <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}> */}
 				<Stack screenOptions={{
@@ -58,7 +58,7 @@ function RootLayoutNav() {
 					<Stack.Screen name="modal" options={{ presentation: 'modal' }} />
 					<Stack.Screen name="posts/[id]" options={{ title: 'Post', }} />
 				</Stack>
-			</ApolloClientProvider>
-		</ThemeProvider>
+			</ThemeProvider>
+		</ApolloClientProvider>
 	);
 }
