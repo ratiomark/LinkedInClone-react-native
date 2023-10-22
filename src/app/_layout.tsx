@@ -48,10 +48,12 @@ function RootLayoutNav() {
 	return (
 		<ThemeProvider value={DefaultTheme}>
 			{/* <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}> */}
-			<Stack>
+			<Stack screenOptions={{
+				headerTitleAlign: 'center',
+			}}>
 				<Stack.Screen name="(tabs)" options={{ headerShown: false }} />
 				<Stack.Screen name="modal" options={{ presentation: 'modal' }} />
-				<Stack.Screen name="posts/[id]" options={{ title: 'Post' }} />
+				<Stack.Screen name="posts/[id]" options={{ title: 'Post', }} />
 			</Stack>
 		</ThemeProvider>
 	);

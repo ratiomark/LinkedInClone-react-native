@@ -23,13 +23,15 @@ const PostListItem = ({ post }: PostListItemProps) => {
 	return (
 		<Link href={`/posts/${post.id}`} asChild>
 			<Pressable style={styles.container}>
-				<View style={styles.header}>
-					<Image source={{ uri: post.profile.image }} style={styles.userImage} />
-					<View>
-						<Text style={styles.userName}>{post.profile.name}</Text>
-						<Text style={styles.position}>{post.profile.position}</Text>
-					</View>
-				</View>
+				<Link href={`/users/${post.profile.id}`} asChild>
+					<Pressable style={styles.header}>
+						<Image source={{ uri: post.profile.image }} style={styles.userImage} />
+						<View>
+							<Text style={styles.userName}>{post.profile.name}</Text>
+							<Text style={styles.position}>{post.profile.position}</Text>
+						</View>
+					</Pressable>
+				</Link>
 
 				<Text style={styles.content}>{post.content}</Text>
 				{post.image && (

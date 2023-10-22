@@ -8,7 +8,9 @@ const post = posts[0]
 
 const PostDetailsScreen = () => {
 	const { id } = useLocalSearchParams()
-
+	if (!post) {
+		return <Text>Post not found</Text>
+	}
 	return (
 		<ScrollView>
 			<PostListItem post={post as Post} />
