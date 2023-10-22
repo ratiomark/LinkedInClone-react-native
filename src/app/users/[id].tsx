@@ -1,8 +1,10 @@
-import { View, Text, ScrollView, StyleSheet, Image, Pressable } from 'react-native'
+import { View, Text, StyleSheet, Image, Pressable, ScrollView } from 'react-native'
 import userJson from "../../../assets/data/user.json";
 import { useLocalSearchParams, useNavigation } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import ExperienceListItem from '@/components/ExperienceListItem';
+import { Experience } from '@/types';
 
 const UserProfileScreen = () => {
 	const [user, setUser] = useState(userJson)
@@ -22,38 +24,58 @@ const UserProfileScreen = () => {
 		return <Text>user not found</Text>
 	}
 	return (
-		<View style={styles.container} >
-			<View style={styles.header} >
-				<Image
-					source={{ uri: user.backImage }}
-					style={styles.backImage}
-				/>
+		<ScrollView
+			// style={styles.scrollView}
+			// contentContainerStyle={styles.container}
+			showsVerticalScrollIndicator={false}
+		>
+			<View style={styles.container} >
 
-				<View style={styles.headerContent} >
+
+				<View style={styles.header} >
 					<Image
-						source={{ uri: user.image }}
-						style={styles.image}
+						source={{ uri: user.backImage }}
+						style={styles.backImage}
 					/>
-					<Text style={styles.name} >{user.name}</Text>
-					<Text style={styles.position} >{user.position}</Text>
 
-					<Pressable onPress={onConnect} style={styles.button} >
-						<Text style={styles.buttonText} >Connect</Text>
-					</Pressable>
+					<View style={styles.headerContent} >
+						<Image
+							source={{ uri: user.image }}
+							style={styles.image}
+						/>
+						<Text style={styles.name} >{user.name}</Text>
+						<Text style={styles.position} >{user.position}</Text>
+
+						<Pressable onPress={onConnect} style={styles.button} >
+							<Text style={styles.buttonText} >Connect</Text>
+						</Pressable>
+					</View>
+				</View>
+
+				<View style={styles.section} >
+					<Text style={styles.sectionTitle} >About</Text>
+					<Text style={styles.paragraph} >{user.about}</Text>
+				</View>
+
+				<View style={styles.section} >
+					<Text style={styles.sectionTitle} >Experience</Text>
+
+					{user.experience?.map(experience => (
+						<ExperienceListItem
+							key={experience.id}
+							experience={experience}
+						/>
+					))}
+
 				</View>
 			</View>
-
-			<View style={styles.section} >
-				<Text style={styles.sectionTitle} >About</Text>
-				<Text style={styles.paragraph} >{user.about}</Text>
-
-			</View>
-
-		</View>
+		</ScrollView>
 	)
 }
 const styles = StyleSheet.create({
 	section: {
+		// flex: 1,
+		width: '100%',
 		backgroundColor: 'white',
 		padding: 10,
 		marginVertical: 10,
@@ -68,9 +90,15 @@ const styles = StyleSheet.create({
 		lineHeight: 20,
 	},
 
+	scrollView: {
+		height: '20%',
+		// justifyContent: 'center',
+	},
 	container: {
 		flex: 1,
 		alignItems: 'center',
+		// backgroundColor: 'lightgrey',
+		paddingBottom: 50
 		// justifyContent: 'center',
 	},
 	header: {
@@ -91,7 +119,7 @@ const styles = StyleSheet.create({
 		width: 120,
 		aspectRatio: 1,
 		borderRadius: 9999,
-		borderBlockColor: 'white',
+		borderColor: 'white',
 		borderWidth: 3,
 		// position: 'absolute',
 		// top: '100%',

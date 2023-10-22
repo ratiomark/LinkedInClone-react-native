@@ -9,14 +9,32 @@
     {
       "id": "e1",
       "title": "Founder",
-      "companyName": "notJust.dev",
-      "companyImage": "https://media.licdn.com/dms/image/C4E0BAQGmtxs_h3L1fg/company-logo_100_100/0/1646644437762?e=1697673600&v=beta&t=krLyDvQnoEVEBn1MlGrFEM8cpt5Y24XvXJV7RjXyGsc"
+      "companyname": "notJust.dev",
+      "companyimage": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQj-xk1lQvnob714JxmAbS0S7nW0fEk73RW51OSQq4f3w&s"
     },
     {
       "id": "e2",
       "title": "Co-Founder & CTO",
-      "companyName": "Fitenium",
-      "companyImage": "https://media.licdn.com/dms/image/C4D0BAQHg4ra02yFrcw/company-logo_200_200/0/1573813337379?e=1697673600&v=beta&t=3wUnjLtfkYpIMJg4ZP2qq7Vj0rvU7aUOVrkffLabTuQ"
+      "companyname": "Fitenium",
+      "companyimage": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQj-xk1lQvnob714JxmAbS0S7nW0fEk73RW51OSQq4f3w&s"
+    },
+    {
+      "id": "e3",
+      "title": "Co-Founder & CTO",
+      "companyname": "adwqdqwdqw",
+      "companyimage": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQj-xk1lQvnob714JxmAbS0S7nW0fEk73RW51OSQq4f3w&s"
+    },
+    {
+      "id": "e4",
+      "title": "Co-Founder & CTO",
+      "companyname": "Fitenium",
+      "companyimage": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQj-xk1lQvnob714JxmAbS0S7nW0fEk73RW51OSQq4f3w&s"
+    },
+    {
+      "id": "e5",
+      "title": "Co-Founder & CTO",
+      "companyname": "Fitenium",
+      "companyimage": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQj-xk1lQvnob714JxmAbS0S7nW0fEk73RW51OSQq4f3w&s"
     }
   ]
 }
