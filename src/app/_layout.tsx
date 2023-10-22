@@ -1,3 +1,4 @@
+import { ApolloClientProvider } from '@/apollo/ApolloProvider';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
@@ -47,14 +48,17 @@ function RootLayoutNav() {
 
 	return (
 		<ThemeProvider value={DefaultTheme}>
-			{/* <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}> */}
-			<Stack screenOptions={{
-				headerTitleAlign: 'center',
-			}}>
-				<Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-				<Stack.Screen name="modal" options={{ presentation: 'modal' }} />
-				<Stack.Screen name="posts/[id]" options={{ title: 'Post', }} />
-			</Stack>
+			<ApolloClientProvider>
+
+				{/* <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}> */}
+				<Stack screenOptions={{
+					headerTitleAlign: 'center',
+				}}>
+					<Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+					<Stack.Screen name="modal" options={{ presentation: 'modal' }} />
+					<Stack.Screen name="posts/[id]" options={{ title: 'Post', }} />
+				</Stack>
+			</ApolloClientProvider>
 		</ThemeProvider>
 	);
 }

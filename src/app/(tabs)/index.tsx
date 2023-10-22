@@ -1,16 +1,36 @@
-import { FlatList, StyleSheet } from 'react-native';
-
-import { Text, View } from '@/components/Themed';
+import { ActivityIndicator, FlatList, StyleSheet } from 'react-native';
 import PostListItem from '@/components/PostListItem';
-import posts from "../../../assets/data/posts.json";
 import { Post } from '@/types';
-const post = posts[0]
+import { gql, useQuery } from '@apollo/client';
+import React from 'react';
 
+const getPostListQuery = gql`
+query getPostList {
+  postList {
+    content
+    id
+    image
+    userId
+    profile {
+      image
+      name
+      position
+    }
+  }
+}
+`
 export default function HomeFeedScreen() {
+	const { data, loading } = useQuery<{ postList: Post[] }>(getPostListQuery)
+
+	if (loading) {
+		return <ActivityIndicator />
+	}
+
+
 	return (
 		// если внутри item есть id, то flalist будет автоматов использовать его в качестве значения у keyExtractor
 		<FlatList
-			data={posts as Post[]}
+			data={data?.postList as Post[]}
 			renderItem={({ item }) => <PostListItem post={item} />}
 			keyExtractor={(item) => item.id}
 			showsVerticalScrollIndicator={false}
