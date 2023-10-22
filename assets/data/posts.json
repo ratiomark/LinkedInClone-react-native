@@ -1,7 +1,7 @@
 [
   {
     "id": "2",
-    "author": {
+    "profile": {
       "id": "u2",
       "name": "Vadim Savin",
       "position": "Founder at notJust.dev",
@@ -14,7 +14,7 @@
   },
   {
     "id": "stepzen",
-    "author": {
+    "profile": {
       "id": "u2",
       "name": "StepZen, an IBM Company",
       "position": "GraphQL server with unique architecture",
@@ -27,7 +27,7 @@
   },
   {
     "id": "1",
-    "author": {
+    "profile": {
       "id": "u1",
       "name": "Jeff Bezon",
       "position": "Intern @Amazon",
@@ -56,7 +56,7 @@
   },
   {
     "id": "3",
-    "author": {
+    "profile": {
       "id": "u3",
       "name": "Peter Johnson",
       "position": "CTO at Facebook",
