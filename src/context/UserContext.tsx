@@ -1,9 +1,10 @@
+import { User } from "@/types";
 import { gql, useQuery } from "@apollo/client";
 import { useUser } from "@clerk/clerk-expo";
 import { PropsWithChildren, createContext, useContext } from "react";
 
 type UserContextType = {
-	dbUser?: string
+	dbUser?: User
 	authUser?: ReturnType<typeof useUser>['user']
 	loading: boolean
 	reloadDbUser: () => void

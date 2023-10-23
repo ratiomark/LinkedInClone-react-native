@@ -6,6 +6,7 @@ import { useNavigation, useRouter } from 'expo-router';
 import * as ImagePicker from 'expo-image-picker';
 import { FontAwesome } from '@expo/vector-icons';
 import { gql, useMutation } from '@apollo/client';
+import { useUserContext } from '@/context/UserContext';
 
 const insertNewPostMutations = gql`
 	mutation MyMutation ($userId: ID, $content: String!, $image: String,) {
@@ -19,6 +20,7 @@ const insertNewPostMutations = gql`
 `
 
 export default function NewPost() {
+	const { dbUser } = useUserContext()
 	const [image, setImage] = useState<null | string>(null);
 	const [content, setContent] = useState("")
 	const [handleMutation, { loading }] = useMutation(insertNewPostMutations, {
@@ -44,13 +46,15 @@ export default function NewPost() {
 
 	const onPost = async () => {
 		if (loading) return
+		// console.log(dbUser?.id)
 		await handleMutation({
 			variables: {
 				content,
-				image
+				image,
+				userId: dbUser?.id
 			}
 		})
-		console.warn('post  ', content)
+		// console.warn('post  ', content)
 		router.push('/(tabs)/')
 		setContent('')
 	}

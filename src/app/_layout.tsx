@@ -4,8 +4,8 @@ import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native
 import { useFonts } from 'expo-font';
 import { SplashScreen, Stack } from 'expo-router';
 import { Children, PropsWithChildren, useEffect } from 'react';
-import { useColorScheme } from 'react-native';
-import { ClerkProvider, SignedIn, SignedOut } from '@clerk/clerk-expo';
+import { ActivityIndicator, Button, View, useColorScheme } from 'react-native';
+import { ClerkProvider, SignedIn, SignedOut, useAuth } from '@clerk/clerk-expo';
 import AuthScreen from '@/components/auth/AuthScreen';
 import * as SecureStore from "expo-secure-store";
 import { UserContextProvider, useUserContext } from '@/context/UserContext';
@@ -80,7 +80,7 @@ function RootLayoutNavWithProviders() {
 			<ApolloClientProvider>
 				<UserContextProvider>
 					<ThemeProvider value={DefaultTheme}>
-						<RootLayoutNav />;
+						<RootLayoutNav />
 					</ThemeProvider>
 				</UserContextProvider>
 			</ApolloClientProvider>
@@ -89,16 +89,25 @@ function RootLayoutNavWithProviders() {
 }
 
 function RootLayoutNav() {
-	const { dbUser } = useUserContext()
+	const { dbUser, loading } = useUserContext()
 
 	return (
 		<>
 			<SignedIn>
 				{!dbUser
-					? <SetupProfileScreen />
+					? (
+						loading
+							? <ActivityIndicator />
+							: <SetupProfileScreen />)
 					: (
-						<Stack screenOptions={{ headerTitleAlign: 'center' }}>
-							<Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+						<Stack screenOptions={{
+							headerTitleAlign: 'center',
+							// headerLeft: () => <SignOut />,
+						}}>
+
+							<Stack.Screen name="(tabs)" options={{
+								headerShown: false,
+							}} />
 							<Stack.Screen name="modal" options={{ presentation: 'modal' }} />
 							<Stack.Screen name="posts/[id]" options={{ title: 'Post', }} />
 						</Stack>
