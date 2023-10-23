@@ -11,11 +11,11 @@ const ExperienceListItem = ({ experience }: ExperienceListItemProps) => {
 		>
 
 			<Image
-				source={{ uri: experience?.companyimage }}
+				source={{ uri: experience?.companyImage }}
 				style={styles.image} />
 			<View>
 				<Text style={styles.title} >{experience.title}</Text>
-				<Text style={styles.company} >{experience.companyname}</Text>
+				<Text style={styles.company} >{experience.companyName}</Text>
 			</View>
 		</View>
 	)

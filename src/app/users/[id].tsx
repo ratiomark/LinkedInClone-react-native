@@ -1,28 +1,55 @@
-import { View, Text, StyleSheet, Image, Pressable, ScrollView } from 'react-native'
+import { View, Text, StyleSheet, Image, Pressable, ScrollView, ActivityIndicator } from 'react-native'
 import userJson from "../../../assets/data/user.json";
 import { useLocalSearchParams, useNavigation } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import React, { useEffect, useState } from 'react';
 import ExperienceListItem from '@/components/ExperienceListItem';
-import { Experience } from '@/types';
+import { Experience, User } from '@/types';
+import { gql, useQuery } from '@apollo/client';
 
+const getUserQuery = gql`
+	query getUserQuery($id: ID!) {
+		profile(id: $id) {
+			about
+			backImage
+			name
+			image
+			position
+			experience {
+				companyImage
+				companyName
+				title
+			}
+		}
+	}
+`
 const UserProfileScreen = () => {
-	const [user, setUser] = useState(userJson)
-	const navigation = useNavigation()
 	const { id } = useLocalSearchParams()
-	const onConnect = () => console.warn('connect')
+	const { loading, error, data } = useQuery<{ profile: User }>(getUserQuery, { variables: { id } });
+	const user = data?.profile;
+
+	const navigation = useNavigation();
+
+	const onConnect = () => {
+		console.warn('Connect Pressed');
+	};
 
 	useEffect(() => {
-		navigation.setOptions({
-			title: user.name,
-		})
+		navigation.setOptions({ title: user?.name || 'User' });
+	}, [user?.name]);
 
-	}, [user?.name])
-
-
-	if (!user) {
-		return <Text>user not found</Text>
+	if (loading) {
+		return <ActivityIndicator />;
 	}
+	if (error) {
+		console.log(error);
+		return <Text>Something went wrong...</Text>;
+	}
+	if (!user) {
+		return <Text>Oooopps...user not found</Text>;
+	}
+
+
 	return (
 		<ScrollView
 			// style={styles.scrollView}
@@ -54,15 +81,16 @@ const UserProfileScreen = () => {
 
 				<View style={styles.section} >
 					<Text style={styles.sectionTitle} >About</Text>
-					<Text style={styles.paragraph} >{user.about}</Text>
+					<Text style={styles.paragraph} >
+						{user.about ?? "User didn't write about himself"}
+					</Text>
 				</View>
 
 				<View style={styles.section} >
-					<Text style={styles.sectionTitle} >Experience</Text>
-
-					{user.experience?.map(experience => (
+					<Text style={styles.sectionTitle}>Experience</Text>
+					{user.experience?.map((experience, index) => (
 						<ExperienceListItem
-							key={experience.id}
+							key={index}
 							experience={experience}
 						/>
 					))}

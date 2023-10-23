@@ -150,7 +150,7 @@ type Query {
       type: "postgresql"
       schema: "public"
       query: """
-      SELECT "content", "id", "image", "userId" FROM "post" ORDER BY "id" LIMIT $1 OFFSET $2
+      SELECT "content", "id", "image", "userId" FROM "post" ORDER BY "id" DESC LIMIT $1 OFFSET $2
       """
       configuration: "postgresql_config"
     )

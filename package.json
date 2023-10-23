@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "scripts": {
     "start": "expo start",
+    "clear": "expo start --clear",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
@@ -14,6 +15,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.8.6",
+    "@clerk/clerk-expo": "^0.19.11",
     "@expo/vector-icons": "^13.0.0",
     "@react-navigation/native": "^6.0.2",
     "expo": "~49.0.15",
@@ -21,6 +23,7 @@
     "expo-image-picker": "~14.3.2",
     "expo-linking": "~5.0.2",
     "expo-router": "^2.0.0",
+    "expo-secure-store": "^12.5.0",
     "expo-splash-screen": "~0.20.5",
     "expo-status-bar": "~1.6.0",
     "expo-system-ui": "~2.4.0",
